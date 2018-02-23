@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Detail Activity -->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_size">54dp</dimen>
+
+</resources>
