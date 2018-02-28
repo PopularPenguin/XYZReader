@@ -1,5 +1,14 @@
 <resources>
 
+    <!-- General -->
+    <dimen name="text_margin">8dp</dimen>
+
+    <!-- List Activity -->
+    <dimen name="card_height">250dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_corner_radius">6dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
     <!-- Detail Activity -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_size">54dp</dimen>

@@ -1,14 +1,15 @@
-package com.popularpenguin.xyzreader;
+package com.popularpenguin.xyzreader.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.popularpenguin.xyzreader.R;
 
 public class DetailFragment extends Fragment {
 
@@ -20,8 +21,10 @@ public class DetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
+        setRetainInstance(true);
+
+        // Toolbar toolbar = view.findViewById(R.id.toolbar);
+        // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
 
         FloatingActionButton fab = view.findViewById(R.id.fab_share);
         fab.setOnClickListener(v ->
