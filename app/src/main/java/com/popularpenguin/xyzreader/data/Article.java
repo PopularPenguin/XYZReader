@@ -3,82 +3,127 @@ package com.popularpenguin.xyzreader.data;
 /** Class representing an individual article */
 public class Article {
 
-    private long mId;
-    private String mTitle;
-    private String mDate;
-    private String mAuthor;
-    private String mThumbPath;
-    private String mPhotoPath;
-    private String mBody;
+    private long id;
+    private String title;
+    private String author;
+    private String body;
+    private String thumbUrl;
+    private String photoUrl;
+    private double aspectRatio;
+    private String date;
 
+    Article(Builder b) {
+        this.id = b.id;
+        this.title = b.title;
+        this.author = b.author;
+        this.body = b.body;
+        this.thumbUrl = b.thumbUrl;
+        this.photoUrl = b.photoUrl;
+        this.aspectRatio = b.aspectRatio;
+        this.date = b.date;
+    }
+
+    // TODO: Remove this constructor later
     public Article(long id, String title, String date, String author) {
-        mId = id;
-        mTitle = title;
-        mDate = date;
-        mAuthor = author;
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.author = author;
     }
 
     public long getId() {
-        return mId;
-    }
-
-    public void setId(long id) {
-        mId = id;
+        return id;
     }
 
     public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public String getDate() {
-        return mDate;
-    }
-
-    public void setDate(String date) {
-        mDate = date;
+        return title;
     }
 
     public String getAuthor() {
-        return mAuthor;
-    }
-
-    public void setAuthor(String author) {
-        mAuthor = author;
-    }
-
-    public String getThumbPath() {
-        return mThumbPath;
-    }
-
-    public void setThumbPath(String thumbPath) {
-        mThumbPath = thumbPath;
+        return author;
     }
 
     public String getBody() {
-        return mBody;
+        return body;
     }
 
-    public void setBody(String body) {
-        mBody = body;
+    public String getThumbUrl() {
+        return thumbUrl;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public double getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     /** Artile builder inner class */
-    public class Builder {
+    public static class Builder {
+        private long id;
+        private String title;
+        private String author;
+        private String body;
+        private String thumbUrl;
+        private String photoUrl;
+        private double aspectRatio;
+        private String date;
 
-        public Article mArticle;
+        public Builder id(long id) {
+            this.id = id;
 
-        public Builder(Article article) {
-            mArticle = article;
+            return this;
         }
 
-        public Article addBody(String body) {
-            mArticle.setBody(body);
+        public Builder title(String title) {
+            this.title = title;
 
-            return mArticle;
+            return this;
+        }
+
+        public Builder author(String author) {
+            this.author = author;
+
+            return this;
+        }
+
+        public Builder body(String body) {
+            this.body = body;
+
+            return this;
+        }
+
+        public Builder thumbUrl(String url) {
+            thumbUrl = url;
+
+            return this;
+        }
+
+        public Builder photoUrl(String url) {
+            photoUrl = url;
+
+            return this;
+        }
+
+        public Builder aspectRatio(double ratio) {
+            aspectRatio = ratio;
+
+            return this;
+        }
+
+        public Builder date(String date) {
+            this.date = date;
+
+            return this;
+        }
+
+        public Article build() {
+            return new Article(this);
         }
     }
 }

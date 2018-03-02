@@ -14,6 +14,7 @@ import com.popularpenguin.xyzreader.data.Article;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,11 +27,11 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     }
 
     private final Context ctx;
-    private final ArrayList<Article> mArticleList;
+    private final List<Article> mArticleList;
     private final ReaderAdapterOnClickHandler mClickHandler;
 
     public ReaderAdapter(Context ctx,
-                         ArrayList<Article> articleList,
+                         List<Article> articleList,
                          ReaderAdapterOnClickHandler clickHandler) {
 
         this.ctx = ctx;
@@ -77,7 +78,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         void bind(@NonNull Article article) {
             // TODO: make sure image are efficient and don't slow scrolling speed
             Picasso.with(ctx)
-                    .load(article.getThumbPath())
+                    .load(article.getThumbUrl())
                     .resize(50, 50)
                     .centerInside()
                     .placeholder(R.drawable.error)

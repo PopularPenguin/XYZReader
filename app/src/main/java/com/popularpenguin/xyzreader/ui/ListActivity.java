@@ -1,25 +1,30 @@
 package com.popularpenguin.xyzreader.ui;
 
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
 import android.content.Intent;
+import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
+import android.view.View;
 
 import com.popularpenguin.xyzreader.R;
+import com.popularpenguin.xyzreader.controller.ArticleLoader;
 import com.popularpenguin.xyzreader.controller.ReaderAdapter;
 import com.popularpenguin.xyzreader.data.Article;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /** Activity that displays the article list */
 public class ListActivity extends ReaderActivity implements
-        ReaderAdapter.ReaderAdapterOnClickHandler {
+        ReaderAdapter.ReaderAdapterOnClickHandler,
+        LoaderManager.LoaderCallbacks<List<Article>> {
 
     private static final String INTENT_EXTRA_ARTICLE = "article";
 
@@ -28,7 +33,7 @@ public class ListActivity extends ReaderActivity implements
     private ReaderAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private ArrayList<Article> mArticles = new ArrayList<>();
+    private List<Article> mArticles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,5 +99,31 @@ public class ListActivity extends ReaderActivity implements
         intent.putExtra(INTENT_EXTRA_ARTICLE, article.getId());
 
         startActivity(intent, animation);
+    }
+
+    /** Loader callbacks */
+    @Override
+    public Loader<List<Article>> onCreateLoader(int id, Bundle bundle) {
+        return new ArticleLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
+        if (data == null || data.isEmpty()) {
+            Snackbar.make(mRecyclerView, "No data to show", Snackbar.LENGTH_LONG).show();
+
+            mRecyclerView.setVisibility(View.GONE);
+        }
+        else {
+            mArticles = data;
+
+            setupRecyclerView();
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Article>> loader) {
+        // Not implemented
     }
 }
