@@ -2,7 +2,6 @@ package com.popularpenguin.xyzreader.data;
 
 /** Class representing an individual article */
 public class Article {
-
     private long id;
     private String title;
     private String author;
