@@ -7,7 +7,7 @@
     <dimen name="card_height">250dp</dimen>
     <dimen name="card_margin">4dp</dimen>
     <dimen name="card_corner_radius">6dp</dimen>
-    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
 
     <!-- Detail Activity -->
     <dimen name="fab_margin">16dp</dimen>
