@@ -3,6 +3,11 @@ package com.popularpenguin.xyzreader.data;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /** Class representing an individual article */
 @Entity(tableName = "articles")
 public class Article {
@@ -29,11 +34,32 @@ public class Article {
     }
 
     // TODO: Remove this constructor later
-    public Article(long id, String title, String date, String author) {
+    public Article(long id, String title, String author, String body, String thumbUrl,
+                   String photoUrl, double aspectRatio, String date) {
+
         this.id = id;
         this.title = title;
-        this.date = date;
         this.author = author;
+        this.body = body;
+        this.thumbUrl = thumbUrl;
+        this.photoUrl = photoUrl;
+        this.aspectRatio = aspectRatio;
+        this.date = parseDate(date);
+    }
+
+    private static String parseDate(String dateString) {
+        try {
+            SimpleDateFormat parser =
+                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss", Locale.US);
+            Date date = parser.parse(dateString);
+            SimpleDateFormat formatter =
+                    new SimpleDateFormat("MMM dd, yyyy h:mm a", Locale.US);
+
+            return formatter.format(date);
+        }
+        catch (ParseException e) {
+            return dateString;
+        }
     }
 
     public long getId() {
@@ -89,7 +115,7 @@ public class Article {
         return date;
     }
     public void setDate(String date) {
-        this.date = date;
+        this.date = parseDate(date);
     }
 
     /** Artile builder inner class */
@@ -146,7 +172,7 @@ public class Article {
         }
 
         public Builder date(String date) {
-            this.date = date;
+            this.date = parseDate(date);
 
             return this;
         }
