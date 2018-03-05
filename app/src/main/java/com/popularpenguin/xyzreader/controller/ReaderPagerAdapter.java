@@ -1,32 +1,52 @@
 package com.popularpenguin.xyzreader.controller;
 
-import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import com.popularpenguin.xyzreader.ui.DetailFragment;
 
 /** The pager adapter for DetailActivity */
 public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
-    private Cursor mCursor;
+    private OnPageChangeListener mListener;
 
-    public ReaderPagerAdapter(FragmentManager fm, Cursor cursor) {
+    public ReaderPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        mCursor = cursor;
+        mListener = new OnPageChangeListener();
     }
 
     @Override
     public Fragment getItem(int position) {
-        // mCursor.moveToPosition(position);
-        return new DetailFragment();
+        return DetailFragment.newInstance(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
-        // return (mCursor != null) ? mCursor.getCount() : 0;
+        return DbFetcher.getList().size();
+    }
+
+    public OnPageChangeListener getPageChangeListener() {
+        return mListener;
+    }
+
+    public class OnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 }

@@ -57,11 +57,11 @@ public class ListActivity extends ReaderActivity implements
     }
 
     @Override
-    public void onClick(Article article) {
+    public void onClick(int position) {
         Bundle animation = getTransitionAnimation();
 
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(INTENT_EXTRA_ARTICLE, article.getId());
+        intent.putExtra(INTENT_EXTRA_ARTICLE, position);
 
         startActivity(intent, animation);
     }

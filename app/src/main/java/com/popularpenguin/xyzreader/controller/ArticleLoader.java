@@ -27,6 +27,8 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
                 .getArticleDao()
                 .insertArticlesReplace(articles);
 
+        DbFetcher.setList(articles);
+
         return articles;
     }
 }

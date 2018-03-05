@@ -31,12 +31,12 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.tv_title_detail) TextView mTitleView;
     @BindView(R.id.tv_content_detail) TextView mContentView;
 
-    private long mId; // The article's id
+    private int mPosition; // The article's position in the list
     private Article mArticle;
 
-    public static DetailFragment newInstance(long id) {
+    public static DetailFragment newInstance(int position) {
         Bundle args = new Bundle();
-        args.putLong(ListActivity.INTENT_EXTRA_ARTICLE, id);
+        args.putInt(ListActivity.INTENT_EXTRA_ARTICLE, position);
 
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
@@ -55,8 +55,18 @@ public class DetailFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mId = getArguments().getLong(ListActivity.INTENT_EXTRA_ARTICLE);
-        new LoadDbTask().execute();
+        mPosition = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
+        //new LoadDbTask().execute();
+        mArticle = DbFetcher.getList().get((mPosition));
+
+        Picasso.with(getContext())
+                .load(mArticle.getPhotoUrl())
+                .placeholder(R.drawable.error)
+                .error(R.drawable.error)
+                .into(mPhotoView);
+
+        mTitleView.setText(mArticle.getTitle());
+        mContentView.setText(mArticle.getBody());
 
         // Toolbar toolbar = view.findViewById(R.id.toolbar);
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
@@ -71,6 +81,7 @@ public class DetailFragment extends Fragment {
     // TODO: Fix collapsing toolbar to show options menu at top while collapsed
     // https://www.journaldev.com/13927/android-collapsingtoolbarlayout-example
 
+    /*
     private class LoadDbTask extends AsyncTask<Void, Void, Article> {
 
         @Override
@@ -93,5 +104,5 @@ public class DetailFragment extends Fragment {
             mTitleView.setText(mArticle.getTitle());
             mContentView.setText(mArticle.getBody());
         }
-    }
+    } */
 }

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderViewHolder> {
 
     public interface ReaderAdapterOnClickHandler {
-        void onClick(Article a);
+        void onClick(int position);
     }
 
     private final Context ctx;
@@ -119,7 +119,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
 
         @Override
         public void onClick(View v) {
-            mClickHandler.onClick(mArticleList.get(getAdapterPosition()));
+            mClickHandler.onClick(getAdapterPosition());
         }
     }
 }
