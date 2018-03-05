@@ -26,7 +26,7 @@ public class ListActivity extends ReaderActivity implements
         ReaderAdapter.ReaderAdapterOnClickHandler,
         LoaderManager.LoaderCallbacks<List<Article>> {
 
-    private static final String INTENT_EXTRA_ARTICLE = "article";
+    public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
     @BindView(R.id.rv_list) RecyclerView mRecyclerView;
 
@@ -43,39 +43,17 @@ public class ListActivity extends ReaderActivity implements
 
         setTransition();
 
-        // TODO: Load from ArticleLoader instead
-        mArticles.add(new Article(0,
-                "Test Article 1",
-                "January 22, 2018",
-                "by Plato"));
-        mArticles.add(new Article(1,
-                "Test Article 2",
-                "February 22, 2018",
-                "by Issac Newton"));
-        mArticles.add(new Article(2,
-                "Test Article 3",
-                "March 18, 2015",
-                "by Mark Twain"));
-        mArticles.add(new Article(3,
-                "Test Article 4",
-                "May 09, 2011",
-                "by William Shakespeare"));
-        mArticles.add(new Article(4,
-                "Test Article 5",
-                "December 25, 2010",
-                "by H.P. Lovecraft"));
-        mArticles.add(new Article(5,
-                "Test Article 6",
-                "August 30, 2012",
-                "by Henry David Thoreau"));
-        mArticles.add(new Article(6,
-                "Test Article 7",
-                "June 29, 2001",
-                "by Albert Einstein"));
+        getSupportLoaderManager().initLoader(0, null, this);
 
         setupRecyclerView();
+    }
 
-        // TODO: Add Loader (separate class)
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // TODO: Solve crash when resuming activity after back is pressed
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private void setupRecyclerView() {

@@ -29,7 +29,8 @@ public class DetailActivity extends ReaderActivity {
         mViewPager.setAdapter(mPagerAdapter);
         */
 
-        addFragment(R.id.detail_container, new DetailFragment());
+        long id = getIntent().getLongExtra(ListActivity.INTENT_EXTRA_ARTICLE, -1);
+        addFragment(R.id.detail_container, DetailFragment.newInstance(id));
     }
 
     // TODO: Delete menu methods and layout files if I don't use them

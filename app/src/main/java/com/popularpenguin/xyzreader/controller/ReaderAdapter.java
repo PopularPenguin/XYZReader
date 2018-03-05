@@ -97,11 +97,8 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         }
 
         void bind(@NonNull Article article) {
-            // TODO: make sure image are efficient and don't slow scrolling speed
             Picasso.with(ctx)
                     .load(article.getThumbUrl())
-                    .resize(50, 50)
-                    .centerInside()
                     .placeholder(R.drawable.error)
                     .error(R.drawable.error)
                     .into(imageView);
