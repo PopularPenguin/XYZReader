@@ -68,13 +68,6 @@ public class DetailFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
     // TODO: Fix collapsing toolbar to show options menu at top while collapsed
     // https://www.journaldev.com/13927/android-collapsingtoolbarlayout-example
 

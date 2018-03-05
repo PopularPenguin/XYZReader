@@ -9,12 +9,8 @@ import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
-    private Context ctx;
-
     public ArticleLoader(Context ctx) {
         super(ctx);
-
-        this.ctx = ctx;
     }
 
     @Override
@@ -24,12 +20,12 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
     @Override
     public List<Article> loadInBackground() {
+        Context ctx = getContext();
         List<Article> articles = NetworkUtils.getArticles(ctx);
+
         DbFetcher.get(ctx)
                 .getArticleDao()
                 .insertArticlesReplace(articles);
-
-        ctx = null;
 
         return articles;
     }

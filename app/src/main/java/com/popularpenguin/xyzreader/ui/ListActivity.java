@@ -18,9 +18,6 @@ import com.popularpenguin.xyzreader.data.Article;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /** Activity that displays the article list */
 public class ListActivity extends ReaderActivity implements
         ReaderAdapter.ReaderAdapterOnClickHandler,
@@ -28,44 +25,34 @@ public class ListActivity extends ReaderActivity implements
 
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
-    @BindView(R.id.rv_list) RecyclerView mRecyclerView;
-
-    private ReaderAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
+    private RecyclerView mRecyclerView; // Bind later in setupRecyclerView()
     private List<Article> mArticles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        ButterKnife.bind(this);
 
         setTransition();
 
         getSupportLoaderManager().initLoader(0, null, this);
-
-        setupRecyclerView();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // TODO: Solve crash when resuming activity after back is pressed
-        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
     private void setupRecyclerView() {
-        mAdapter = new ReaderAdapter(this, mArticles, this);
-        mRecyclerView.setAdapter(mAdapter);
+        if (mRecyclerView != null) {
+            return;
+        }
 
-        mLayoutManager = new GridLayoutManager(this,
+        mRecyclerView = findViewById(R.id.rv_list);
+        ReaderAdapter adapter = new ReaderAdapter(this, mArticles, this);
+        mRecyclerView.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,
                 2,
                 LinearLayoutManager.VERTICAL,
                 false);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
     }
 
@@ -87,6 +74,7 @@ public class ListActivity extends ReaderActivity implements
 
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
+
         if (data == null || data.isEmpty()) {
             Snackbar.make(mRecyclerView, "No data to show", Snackbar.LENGTH_LONG).show();
 
@@ -96,8 +84,9 @@ public class ListActivity extends ReaderActivity implements
             mArticles = data;
 
             setupRecyclerView();
-        }
 
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

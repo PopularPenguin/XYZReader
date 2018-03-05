@@ -64,6 +64,11 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         return mArticleList.size();
     }
 
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ReaderViewHolder holder) {
+        holder.clearAnimation();
+    }
+
     /**
      * Set entry animation for views in the RecyclerView
      * https://stackoverflow.com/questions/26724964/how-to-animate-recyclerview-items-when-they-appear
@@ -106,6 +111,10 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
             titleView.setText(article.getTitle());
             dateView.setText(article.getDate());
             authorView.setText(article.getAuthor());
+        }
+
+        void clearAnimation() {
+            itemView.clearAnimation();
         }
 
         @Override
