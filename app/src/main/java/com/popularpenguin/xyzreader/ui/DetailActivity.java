@@ -32,7 +32,7 @@ public class DetailActivity extends ReaderActivity {
         int position = getIntent().getIntExtra(ListActivity.INTENT_EXTRA_ARTICLE, 0);
         mPagerAdapter = new ReaderPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(mPagerAdapter.getPageChangeListener());
+        //mViewPager.addOnPageChangeListener(mPagerAdapter.getPageChangeListener());
         mViewPager.setCurrentItem(position);
 
         /*

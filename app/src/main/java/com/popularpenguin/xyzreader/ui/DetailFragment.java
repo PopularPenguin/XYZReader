@@ -19,9 +19,6 @@ import com.popularpenguin.xyzreader.controller.DbFetcher;
 import com.popularpenguin.xyzreader.data.Article;
 import com.squareup.picasso.Picasso;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -66,7 +63,8 @@ public class DetailFragment extends Fragment {
                 .into(mPhotoView);
 
         mTitleView.setText(mArticle.getTitle());
-        mContentView.setText(mArticle.getBody());
+        // TODO: Paginate the body
+        mContentView.setText(mArticle.getBody().substring(0, 2000));
 
         // Toolbar toolbar = view.findViewById(R.id.toolbar);
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
