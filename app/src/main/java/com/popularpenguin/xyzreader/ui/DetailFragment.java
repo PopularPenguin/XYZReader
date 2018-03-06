@@ -1,13 +1,11 @@
 package com.popularpenguin.xyzreader.ui;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +26,6 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.tv_title_detail) TextView mTitleView;
     @BindView(R.id.tv_content_detail) TextView mContentView;
 
-    private int mPosition; // The article's position in the list
-    private Article mArticle;
-
     public static DetailFragment newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt(ListActivity.INTENT_EXTRA_ARTICLE, position);
@@ -43,7 +38,7 @@ public class DetailFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,
+    public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
@@ -52,19 +47,20 @@ public class DetailFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mPosition = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
-        //new LoadDbTask().execute();
-        mArticle = DbFetcher.getList().get((mPosition));
+        // The article's position in the list
+
+        int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
+        Article article = DbFetcher.getList().get((position));
 
         Picasso.with(getContext())
-                .load(mArticle.getPhotoUrl())
+                .load(article.getPhotoUrl())
                 .placeholder(R.drawable.error)
                 .error(R.drawable.error)
                 .into(mPhotoView);
 
-        mTitleView.setText(mArticle.getTitle());
+        mTitleView.setText(article.getTitle());
         // TODO: Paginate the body
-        mContentView.setText(mArticle.getBody().substring(0, 2000));
+        mContentView.setText(article.getBody().substring(0, 5000));
 
         // Toolbar toolbar = view.findViewById(R.id.toolbar);
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
@@ -75,32 +71,4 @@ public class DetailFragment extends Fragment {
 
         return view;
     }
-
-    // TODO: Fix collapsing toolbar to show options menu at top while collapsed
-    // https://www.journaldev.com/13927/android-collapsingtoolbarlayout-example
-
-    /*
-    private class LoadDbTask extends AsyncTask<Void, Void, Article> {
-
-        @Override
-        protected Article doInBackground(Void... voids) {
-            return DbFetcher.get(getContext())
-                    .getArticleDao()
-                    .loadById(mId);
-        }
-
-        @Override
-        protected void onPostExecute(Article article) {
-            mArticle = article;
-
-            Picasso.with(getContext())
-                    .load(mArticle.getPhotoUrl())
-                    .placeholder(R.drawable.error)
-                    .error(R.drawable.error)
-                    .into(mPhotoView);
-
-            mTitleView.setText(mArticle.getTitle());
-            mContentView.setText(mArticle.getBody());
-        }
-    } */
 }

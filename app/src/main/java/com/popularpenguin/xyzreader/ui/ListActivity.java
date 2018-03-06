@@ -1,6 +1,5 @@
 package com.popularpenguin.xyzreader.ui;
 
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.support.v4.content.Loader;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.ArticleLoader;
@@ -74,18 +72,10 @@ public class ListActivity extends ReaderActivity implements
 
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
-
-        if (data == null || data.isEmpty()) {
-            Snackbar.make(mRecyclerView, "No data to show", Snackbar.LENGTH_LONG).show();
-
-            mRecyclerView.setVisibility(View.GONE);
-        }
-        else {
+        if (data != null && !data.isEmpty()) {
             mArticles = data;
 
             setupRecyclerView();
-
-            mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 

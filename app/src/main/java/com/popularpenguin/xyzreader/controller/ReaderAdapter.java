@@ -104,7 +104,6 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         void bind(@NonNull Article article) {
             Picasso.with(ctx)
                     .load(article.getThumbUrl())
-                    .placeholder(R.drawable.error)
                     .error(R.drawable.error)
                     .into(imageView);
 
