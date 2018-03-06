@@ -36,10 +36,14 @@
         <TextView
             android:id="@+id/tv_title_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/black"
-            android:padding="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:textColor="@color/white"
+            android:textSize="18sp"
             tools:text="Article Title"/>
 
     </android.support.design.widget.AppBarLayout>

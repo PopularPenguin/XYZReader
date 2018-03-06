@@ -85,7 +85,6 @@ class NetworkUtils {
      * @throws JSONException
      */
     private static List<Article> parseJSON(String jsonString) throws JSONException {
-        // TODO: Use GSON
         JSONArray results = new JSONArray(jsonString);
 
         List<Article> articleList = new ArrayList<>();
