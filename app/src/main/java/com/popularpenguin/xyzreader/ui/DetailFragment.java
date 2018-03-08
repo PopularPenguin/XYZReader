@@ -1,11 +1,12 @@
 package com.popularpenguin.xyzreader.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,20 @@ public class DetailFragment extends Fragment {
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
 
         FloatingActionButton fab = view.findViewById(R.id.fab_share);
-        fab.setOnClickListener(v ->
-                Snackbar.make(v, "Add a share action", 1000).show());
+        fab.setOnClickListener(v -> shareArticle(article));
 
         return view;
+    }
+
+    /** Share the title and author of the article */
+    private void shareArticle(Article article) {
+        Intent chooser = ShareCompat.IntentBuilder.from(getActivity())
+                .setType("text/plain")
+                .setText(String.format("%s - %s", article.getTitle(), article.getAuthor()))
+                .getIntent();
+
+        Intent intent = Intent.createChooser(chooser, getString(R.string.action_share));
+
+        startActivity(intent);
     }
 }
