@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Surface;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.ArticleLoader;
@@ -45,8 +46,18 @@ public class ListActivity extends ReaderActivity implements
         ReaderAdapter adapter = new ReaderAdapter(this, mArticles, this);
         mRecyclerView.setAdapter(adapter);
 
+        int orientation = getWindowManager().getDefaultDisplay().getRotation();
+        int spanCount;
+
+        if (orientation == Surface.ROTATION_0 || orientation == Surface.ROTATION_180) {
+            spanCount = 2; // in portrait orientation RecyclerView has 2 columns
+        }
+        else {
+            spanCount = 3; // in landscape orientation RecyclerView has 3 columns
+        }
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,
-                2,
+                spanCount,
                 LinearLayoutManager.VERTICAL,
                 false);
 
