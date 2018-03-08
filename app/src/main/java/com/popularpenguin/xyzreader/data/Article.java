@@ -33,7 +33,6 @@ public class Article {
         this.date = b.date;
     }
 
-    // TODO: Remove this constructor later
     public Article(long id, String title, String author, String body, String thumbUrl,
                    String photoUrl, double aspectRatio, String date) {
 

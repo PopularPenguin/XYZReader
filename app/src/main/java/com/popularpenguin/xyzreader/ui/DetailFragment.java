@@ -26,6 +26,7 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.iv_detail) ImageView mPhotoView;
     @BindView(R.id.tv_title_detail) TextView mTitleView;
     @BindView(R.id.tv_content_detail) TextView mContentView;
+    @BindView(R.id.fab_share) FloatingActionButton fab;
 
     public static DetailFragment newInstance(int position) {
         Bundle args = new Bundle();
@@ -66,7 +67,6 @@ public class DetailFragment extends Fragment {
         // Toolbar toolbar = view.findViewById(R.id.toolbar);
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab_share);
         fab.setOnClickListener(v -> shareArticle(article));
 
         return view;
