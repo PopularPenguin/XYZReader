@@ -1,9 +1,11 @@
 package com.popularpenguin.xyzreader.ui;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +19,17 @@ import com.popularpenguin.xyzreader.data.Article;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /** Activity that displays the article list */
 public class ListActivity extends ReaderActivity implements
         ReaderAdapter.ReaderAdapterOnClickHandler,
         LoaderManager.LoaderCallbacks<List<Article>> {
 
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
+
+    @BindView(R.id.swipe_list) SwipeRefreshLayout mRefreshLayout;
 
     private RecyclerView mRecyclerView; // Bind later in setupRecyclerView()
     private List<Article> mArticles = new ArrayList<>();
@@ -32,9 +39,15 @@ public class ListActivity extends ReaderActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        ButterKnife.bind(this);
+
         setTransition();
 
         getSupportLoaderManager().initLoader(0, null, this);
+
+        mRefreshLayout.setOnRefreshListener(() ->
+            getSupportLoaderManager().restartLoader(0, null, this)
+        );
     }
 
     private void setupRecyclerView() {
@@ -76,22 +89,25 @@ public class ListActivity extends ReaderActivity implements
     }
 
     /** Loader callbacks */
+    @NonNull
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle bundle) {
         return new ArticleLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
+    public void onLoadFinished(@NonNull Loader<List<Article>> loader, List<Article> data) {
         if (data != null && !data.isEmpty()) {
             mArticles = data;
 
             setupRecyclerView();
+
+            mRefreshLayout.setRefreshing(false);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Article>> loader) {
+    public void onLoaderReset(@NonNull Loader<List<Article>> loader) {
         // Not implemented
     }
 }
