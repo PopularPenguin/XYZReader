@@ -9,9 +9,13 @@
     <dimen name="card_corner_radius">6dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
 
+    <dimen name="text_list_title">18sp</dimen>
+    <dimen name="text_list_subtitle">14sp</dimen>
+
     <!-- Detail Activity -->
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_size">54dp</dimen>
+
     <dimen name="text_body_margin">16dp</dimen>
     <dimen name="text_body_size">18sp</dimen>
 

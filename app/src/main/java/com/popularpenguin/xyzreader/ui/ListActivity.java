@@ -45,9 +45,10 @@ public class ListActivity extends ReaderActivity implements
 
         getSupportLoaderManager().initLoader(0, null, this);
 
-        mRefreshLayout.setOnRefreshListener(() ->
-            getSupportLoaderManager().restartLoader(0, null, this)
-        );
+        mRefreshLayout.setOnRefreshListener(() -> {
+            getSupportLoaderManager().restartLoader(0, null, this);
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+        });
     }
 
     private void setupRecyclerView() {
