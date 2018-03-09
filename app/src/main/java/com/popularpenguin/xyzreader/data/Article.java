@@ -68,11 +68,6 @@ public class Article {
     public List<String> getSplitBody() {
         String[] splitArray = body.split("\r\n\r\n");
 
-        // replace carriage returns with a space
-        for (int i = 0; i < splitArray.length; i++) {
-            splitArray[i] = splitArray[i].replace("\r\n", " ");
-        }
-
         return Arrays.asList(splitArray);
     }
 

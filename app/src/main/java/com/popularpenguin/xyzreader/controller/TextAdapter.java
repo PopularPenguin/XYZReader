@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.popularpenguin.xyzreader.R;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +21,14 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextHolder> {
 
     private Context ctx;
     private List<String> body;
+    private Pattern mPattern;
 
     public TextAdapter(Context ctx, List<String> body) {
         this.ctx = ctx;
         this.body = body;
+
+        // compile the regex pattern once only for efficiency
+        mPattern = Pattern.compile("\r\n");
     }
 
     @NonNull
@@ -59,7 +64,10 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextHolder> {
         }
 
         void bind(String paragraph) {
-            paragraphView.setText(paragraph);
+            // replace carriage returns with a space
+            String text = mPattern.matcher(paragraph).replaceAll(" ");
+
+            paragraphView.setText(text);
         }
     }
 }

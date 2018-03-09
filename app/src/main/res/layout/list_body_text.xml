@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.uncopt.android.widget.text.justify.JustifiedTextView
+
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tv_paragraph"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:lineSpacingExtra="4dp"
-    android:padding="16dp"
+    android:padding="@dimen/text_body_margin"
     android:textColor="@color/black"
-    android:textSize="18sp"/>
+    android:textSize="@dimen/text_body_size"/>

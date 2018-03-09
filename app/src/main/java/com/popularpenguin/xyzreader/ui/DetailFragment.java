@@ -58,7 +58,6 @@ public class DetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         // The article's position in the list
-
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
         mArticle = DbFetcher.getList().get((position));
 
@@ -82,8 +81,6 @@ public class DetailFragment extends Fragment {
 
     /** Set the RecyclerView on the article's body */
     private void setupRecyclerView(List<String> body) {
-        Log.i("Detail", "Length of split body in setup: " + body.size());
-
         TextAdapter adapter = new TextAdapter(getActivity(), body);
         mRecyclerView.setAdapter(adapter);
 
