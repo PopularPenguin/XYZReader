@@ -5,7 +5,9 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /** Class representing an individual article */
@@ -59,6 +61,13 @@ public class Article {
         catch (ParseException e) {
             return dateString;
         }
+    }
+
+    // Get a split up list
+    public List<String> getSplitBody() {
+        String[] splitArray = body.split("\r\n\r\n");
+
+        return Arrays.asList(splitArray);
     }
 
     public long getId() {

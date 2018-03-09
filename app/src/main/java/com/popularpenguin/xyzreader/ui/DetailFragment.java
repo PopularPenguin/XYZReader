@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,9 @@ public class DetailFragment extends Fragment {
         mTitleView.setText(article.getTitle());
         // TODO: Paginate the body
         mContentView.setText(article.getBody().substring(0, 5000));
+
+        Log.i("Detail", article.getTitle() + "Length of split body: " + article.getSplitBody().size());
+        Log.i("Detail", article.getTitle() + "Lenght of body: " + article.getBody().length());
 
         // Toolbar toolbar = view.findViewById(R.id.toolbar);
         // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
