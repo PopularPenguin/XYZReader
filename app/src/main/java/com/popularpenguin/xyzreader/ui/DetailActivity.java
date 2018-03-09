@@ -34,26 +34,4 @@ public class DetailActivity extends ReaderActivity {
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(position);
     }
-
-    // TODO: Delete menu methods and layout files if I don't use them
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        switch (itemId) {
-
-            case R.id.action_share:
-                // TODO: Delete this code and point to real share action
-                Toast.makeText(this, "Add a share action", Toast.LENGTH_SHORT).show();
-        }
-
-        return false;
-    }
 }

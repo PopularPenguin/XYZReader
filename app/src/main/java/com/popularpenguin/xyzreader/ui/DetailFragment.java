@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +68,8 @@ public class DetailFragment extends Fragment {
 
         mTitleView.setText(mArticle.getTitle());
 
-        // Toolbar toolbar = view.findViewById(R.id.toolbar);
-        // ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
+        //Toolbar toolbar = view.findViewById(R.id.toolbar_detail);
+        //((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
 
         fab.setOnClickListener(v -> shareArticle(mArticle));
 
