@@ -38,35 +38,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black"
-            android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:paddingStart="24dp"
             android:paddingEnd="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
             android:textColor="@color/white"
             android:textSize="18sp"
             tools:text="Article Title"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_content_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:id="@+id/tv_content_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:lineSpacingExtra="4dp"
-            android:padding="16dp"
-            android:text="The quick brown fox jumped over the lazy dog."
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
-
-    </android.support.v4.widget.NestedScrollView>
+        android:elevation="2dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_share"

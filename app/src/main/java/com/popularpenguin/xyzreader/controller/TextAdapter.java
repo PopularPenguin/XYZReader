@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Adapter to efficiently display the article body */
+/** Adapter to efficiently display the article body, 200k+ characters don't work well with TextViews */
 public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextHolder> {
 
     private Context ctx;

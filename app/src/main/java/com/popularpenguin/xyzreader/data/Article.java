@@ -48,6 +48,7 @@ public class Article {
         this.date = parseDate(date);
     }
 
+    /** Parse the date returned from the server into the correct format */
     private static String parseDate(String dateString) {
         try {
             SimpleDateFormat parser =
@@ -63,9 +64,14 @@ public class Article {
         }
     }
 
-    // Get a split up list
+    /** Get a split up list for display in a RecyclerView */
     public List<String> getSplitBody() {
         String[] splitArray = body.split("\r\n\r\n");
+
+        // replace carriage returns with a space
+        for (int i = 0; i < splitArray.length; i++) {
+            splitArray[i] = splitArray[i].replace("\r\n", " ");
+        }
 
         return Arrays.asList(splitArray);
     }
@@ -126,7 +132,7 @@ public class Article {
         this.date = parseDate(date);
     }
 
-    /** Artile builder inner class */
+    /** Article builder inner class */
     public static class Builder {
         private long id;
         private String title;
