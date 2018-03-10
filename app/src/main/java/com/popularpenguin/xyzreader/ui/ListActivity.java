@@ -1,6 +1,8 @@
 package com.popularpenguin.xyzreader.ui;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.support.v4.content.Loader;
@@ -30,6 +32,8 @@ public class ListActivity extends ReaderActivity implements
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
     @BindView(R.id.swipe_list) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.app_bar_list) AppBarLayout mAppBar;
+    @BindView(R.id.collapsing_toolbar_list) CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private RecyclerView mRecyclerView; // Bind later in setupRecyclerView()
     private List<Article> mArticles = new ArrayList<>();
@@ -47,7 +51,33 @@ public class ListActivity extends ReaderActivity implements
 
         mRefreshLayout.setOnRefreshListener(() -> {
             getSupportLoaderManager().restartLoader(0, null, this);
-            mRecyclerView.getAdapter().notifyDataSetChanged();
+
+            if (mRecyclerView != null) {
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+        // Display text on app bar when it is totally collapsed
+        // https://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
+        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShowing = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = mAppBar.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    String appName = getResources().getString(R.string.app_name);
+                    mCollapsingToolbarLayout.setTitle(appName);
+                    isShowing = true;
+                }
+                else if (isShowing) {
+                    mCollapsingToolbarLayout.setTitle(" ");
+                    isShowing = false;
+                }
+            }
         });
     }
 
