@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,9 +57,13 @@ public class DetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
 
         ButterKnife.bind(this, view);
+
+        ((DetailActivity) getActivity()).getDelegate().setSupportActionBar(mToolbar);
+        ((DetailActivity) getActivity()).getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // The article's position in the list
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
@@ -70,11 +76,6 @@ public class DetailFragment extends Fragment {
                 .into(mPhotoView);
 
         mCollapsingToolbarLayout.setTitle(mArticle.getTitle());
-
-        // set the toolbar
-        mToolbar = view.findViewById(R.id.toolbar_detail);
-        ((ReaderActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((ReaderActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fab.setOnClickListener(v -> shareArticle(mArticle));
 
