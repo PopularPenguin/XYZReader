@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -32,10 +31,8 @@ import butterknife.ButterKnife;
 public class DetailFragment extends Fragment {
 
     @BindView(R.id.iv_detail) ImageView mPhotoView;
-    @BindView(R.id.tv_title_detail) TextView mTitleView;
     @BindView(R.id.rv_content_detail) RecyclerView mRecyclerView;
     @BindView(R.id.toolbar_detail) Toolbar mToolbar;
-    @BindView(R.id.app_bar_detail) AppBarLayout mAppBar;
     @BindView(R.id.collapsing_toolbar_detail) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.fab_share) FloatingActionButton fab;
 
@@ -72,36 +69,12 @@ public class DetailFragment extends Fragment {
                 .error(R.drawable.error)
                 .into(mPhotoView);
 
-        mTitleView.setText(mArticle.getTitle());
+        mCollapsingToolbarLayout.setTitle(mArticle.getTitle());
 
         // set the toolbar
         mToolbar = view.findViewById(R.id.toolbar_detail);
         ((ReaderActivity) getActivity()).setSupportActionBar(mToolbar);
         ((ReaderActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Display text on app bar when it is totally collapsed
-        // https://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
-        mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShowing = true;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = mAppBar.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    String appName = getResources().getString(R.string.app_name);
-                    mCollapsingToolbarLayout.setTitle(appName);
-                    isShowing = true;
-                }
-                else if (isShowing) {
-                    mCollapsingToolbarLayout.setTitle(" ");
-                    isShowing = false;
-                }
-            }
-        });
-
 
         fab.setOnClickListener(v -> shareArticle(mArticle));
 
