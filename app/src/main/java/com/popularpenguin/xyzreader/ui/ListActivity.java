@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Surface;
 
 import com.popularpenguin.xyzreader.R;
@@ -32,6 +33,7 @@ public class ListActivity extends ReaderActivity implements
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
     @BindView(R.id.swipe_list) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.toolbar_list) Toolbar mToolbar;
     @BindView(R.id.app_bar_list) AppBarLayout mAppBar;
     @BindView(R.id.collapsing_toolbar_list) CollapsingToolbarLayout mCollapsingToolbarLayout;
 
@@ -44,6 +46,10 @@ public class ListActivity extends ReaderActivity implements
         setContentView(R.layout.activity_list);
 
         ButterKnife.bind(this);
+
+        // set the toolbar
+        mToolbar = findViewById(R.id.toolbar_list);
+        setSupportActionBar(mToolbar);
 
         setTransition();
 

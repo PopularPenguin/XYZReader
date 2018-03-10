@@ -34,6 +34,7 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.iv_detail) ImageView mPhotoView;
     @BindView(R.id.tv_title_detail) TextView mTitleView;
     @BindView(R.id.rv_content_detail) RecyclerView mRecyclerView;
+    @BindView(R.id.toolbar_detail) Toolbar mToolbar;
     @BindView(R.id.app_bar_detail) AppBarLayout mAppBar;
     @BindView(R.id.collapsing_toolbar_detail) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.fab_share) FloatingActionButton fab;
@@ -74,8 +75,8 @@ public class DetailFragment extends Fragment {
         mTitleView.setText(mArticle.getTitle());
 
         // set the toolbar
-        Toolbar toolbar = view.findViewById(R.id.toolbar_detail);
-        ((ReaderActivity) getActivity()).setSupportActionBar(toolbar);
+        mToolbar = view.findViewById(R.id.toolbar_detail);
+        ((ReaderActivity) getActivity()).setSupportActionBar(mToolbar);
         ((ReaderActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Display text on app bar when it is totally collapsed
