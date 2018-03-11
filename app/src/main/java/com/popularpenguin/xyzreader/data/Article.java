@@ -6,7 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,9 +55,15 @@ public class Article {
         try {
             SimpleDateFormat parser =
                     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss", Locale.US);
+            SimpleDateFormat formatter;
+
             Date date = parser.parse(dateString);
-            SimpleDateFormat formatter =
-                    new SimpleDateFormat("MMM dd, yyyy h:mm a", Locale.US);
+            if (date.before(new Date(0))) {
+                 formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            }
+            else {
+                formatter = new SimpleDateFormat("MMM dd, yyyy h:mm a", Locale.US);
+            }
 
             return formatter.format(date);
         }
