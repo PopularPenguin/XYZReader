@@ -8,16 +8,15 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.DbFetcher;
@@ -38,6 +37,8 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.collapsing_toolbar_detail) CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.fab_share) FloatingActionButton fab;
 
+    private DetailActivity mActivity;
+
     private Article mArticle;
 
     public static DetailFragment newInstance(int position) {
@@ -57,13 +58,11 @@ public class DetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        setHasOptionsMenu(true);
         setRetainInstance(true);
 
         ButterKnife.bind(this, view);
 
-        ((DetailActivity) getActivity()).getDelegate().setSupportActionBar(mToolbar);
-        ((DetailActivity) getActivity()).getDelegate().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mActivity = (DetailActivity) getActivity();
 
         // The article's position in the list
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
@@ -75,28 +74,63 @@ public class DetailFragment extends Fragment {
                 .error(R.drawable.error)
                 .into(mPhotoView);
 
+        // set up toolbar for first time
+        if (mActivity.getSupportActionBar() == null) {
+            setupToolbar();
+        }
+
         mCollapsingToolbarLayout.setTitle(mArticle.getTitle());
 
         fab.setOnClickListener(v -> shareArticle(mArticle));
 
         setupRecyclerView(mArticle.getSplitBody());
 
+        // toolbar must be refreshed on page change
+        // just setting it once results in one fragment's toolbar out of three working properly
+        mActivity.mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setupToolbar();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
     }
 
     /** Set the RecyclerView on the article's body */
     private void setupRecyclerView(List<String> body) {
-        TextAdapter adapter = new TextAdapter(getActivity(), body);
+        TextAdapter adapter = new TextAdapter(mActivity, body);
         mRecyclerView.setAdapter(adapter);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
     }
 
+    private void setupToolbar() {
+
+    }
+
     /** Share the title and author of the article */
     private void shareArticle(Article article) {
-        Intent chooser = ShareCompat.IntentBuilder.from(getActivity())
+        Intent chooser = ShareCompat.IntentBuilder.from(mActivity)
                 .setType("text/plain")
                 .setText(String.format("%s - %s", article.getTitle(), article.getAuthor()))
                 .getIntent();
