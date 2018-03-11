@@ -8,16 +8,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.DbFetcher;
@@ -40,8 +37,6 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
     @BindView(R.id.fab_share) FloatingActionButton fab;
 
     private DetailActivity mActivity;
-    private boolean isViewShown = false;
-
     private Article mArticle;
 
     public static DetailFragment newInstance(int position) {
@@ -69,8 +64,7 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
 
         // set up toolbar for first time
         if (mActivity.getSupportActionBar() == null) {
-            mActivity.setSupportActionBar(mToolbar);
-            mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setupToolbar();
         }
 
         // The article's position in the list
@@ -92,34 +86,20 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
         return view;
     }
 
+    private void setupToolbar() {
+        mActivity.setSupportActionBar(mToolbar);
+        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     public void onPauseFragment() {
-        Log.i("DetailFragment", "onPauseFragment");
-
-
+        // not implemented
     }
 
     @Override
     public void onResumeFragment() {
-        Log.i("DetailFragment", "onResumeFragment");
-        //Toast.makeText(getContext(), "onResumeFragment()", Toast.LENGTH_SHORT).show();
-
-        // set up toolbar for first time
-        if (mActivity.getSupportActionBar() == null) {
-            mActivity.setSupportActionBar(mToolbar);
-            mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (getView() != null) {
-            isViewShown = true;
-        } else {
-            isViewShown = false;
-        }
+        // set up toolbar again when fragment is paged to and resumed
+        setupToolbar();
     }
 
     /**

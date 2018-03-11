@@ -41,6 +41,8 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
         return mListener;
     }
 
+    /** Class needed to fix up button functionality when swiping to a new view page */
+    // https://looksok.wordpress.com/2013/11/02/viewpager-with-detailed-fragment-lifecycle-onresumefragment-including-source-code/
     public class OnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         int currentPosition = 0;
