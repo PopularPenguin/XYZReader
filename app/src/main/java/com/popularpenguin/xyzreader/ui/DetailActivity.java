@@ -1,11 +1,7 @@
 package com.popularpenguin.xyzreader.ui;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.ReaderPagerAdapter;
@@ -33,5 +29,6 @@ public class DetailActivity extends ReaderActivity {
         mPagerAdapter = new ReaderPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(position);
+        mViewPager.addOnPageChangeListener(mPagerAdapter.getPageChangeListener());
     }
 }
