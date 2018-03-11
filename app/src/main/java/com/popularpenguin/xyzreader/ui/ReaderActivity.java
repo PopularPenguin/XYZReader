@@ -14,18 +14,6 @@ import com.popularpenguin.xyzreader.R;
 /** Class provides additional functionality common to XYZ Reader activities */
 public class ReaderActivity extends AppCompatActivity {
 
-    /** Helper method to add a fragment to the activity
-     *
-     * @param resId Container view resource id
-     * @param fragment The fragment to add
-     * */
-    protected void addFragment(int resId, Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(resId, fragment)
-                .commit();
-    }
-
     /** The app's transition animation */
     protected Bundle getTransitionAnimation() {
         return ActivityOptions.makeSceneTransitionAnimation(this)

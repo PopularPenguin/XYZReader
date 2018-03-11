@@ -3,4 +3,6 @@
     <string name="action_share">Share</string>
 
     <string name="cd_main_image">X Y Z Reader</string>
+    <string name="cd_detail_image">Title</string>
+    <string name="cd_list_image">Article</string>
 </resources>

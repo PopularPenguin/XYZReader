@@ -42,7 +42,8 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         mClickHandler = clickHandler;
     }
 
-    public ReaderAdapter.ReaderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public ReaderAdapter.ReaderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         int layout = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(ctx);
         View view = inflater.inflate(layout, parent, false);
@@ -51,7 +52,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     }
 
     @Override
-    public void onBindViewHolder(ReaderViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReaderViewHolder holder, int position) {
         Article article = mArticleList.get(position);
 
         holder.bind(article);

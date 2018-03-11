@@ -24,7 +24,8 @@
                 android:id="@+id/iv_image_item"
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:contentDescription="@string/cd_list_image"/>
 
             <TextView
                 android:id="@+id/tv_title_item"

@@ -14,8 +14,6 @@ public class DetailActivity extends ReaderActivity {
 
     @BindView(R.id.view_pager_detail) ViewPager mViewPager;
 
-    private ReaderPagerAdapter mPagerAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +24,9 @@ public class DetailActivity extends ReaderActivity {
         setTransition();
 
         int position = getIntent().getIntExtra(ListActivity.INTENT_EXTRA_ARTICLE, 0);
-        mPagerAdapter = new ReaderPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mPagerAdapter);
+        ReaderPagerAdapter pagerAdapter = new ReaderPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(pagerAdapter);
         mViewPager.setCurrentItem(position);
-        mViewPager.addOnPageChangeListener(mPagerAdapter.getPageChangeListener());
+        mViewPager.addOnPageChangeListener(pagerAdapter.getPageChangeListener());
     }
 }
