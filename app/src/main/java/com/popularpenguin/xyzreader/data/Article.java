@@ -57,7 +57,7 @@ public class Article {
 
             Date date = parser.parse(dateString);
             if (date.before(new Date(0))) {
-                 formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                 formatter = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
             }
             else {
                 formatter = new SimpleDateFormat("MMM dd, yyyy h:mm a", Locale.US);
