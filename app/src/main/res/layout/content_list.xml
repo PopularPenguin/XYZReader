@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:elevation="2dp"/>
+        android:elevation="@dimen/recycler_elevation"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>
