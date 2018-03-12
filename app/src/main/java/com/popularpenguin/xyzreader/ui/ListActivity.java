@@ -3,6 +3,7 @@ package com.popularpenguin.xyzreader.ui;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
 import android.support.v4.content.Loader;
@@ -16,6 +17,7 @@ import android.view.Surface;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.ArticleLoader;
+import com.popularpenguin.xyzreader.controller.NetworkUtils;
 import com.popularpenguin.xyzreader.controller.ReaderAdapter;
 import com.popularpenguin.xyzreader.data.Article;
 
@@ -140,6 +142,10 @@ public class ListActivity extends ReaderActivity implements
             setupRecyclerView();
 
             mRefreshLayout.setRefreshing(false);
+        }
+
+        if (!NetworkUtils.isConnected(this)) {
+            Snackbar.make(mRecyclerView, R.string.snackbar, Snackbar.LENGTH_LONG).show();
         }
     }
 

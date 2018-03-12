@@ -19,7 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /** Network utility class to check for Internet connectivity and parsing JSON from the server */
-class NetworkUtils {
+public class NetworkUtils {
 
     private static final String JSON_URL = "https://go.udacity.com/xyz-reader-json";
 
@@ -28,7 +28,7 @@ class NetworkUtils {
      * @param ctx The context
      * @return is there network connectivity?
      */
-    static boolean isConnected(Context ctx) {
+    public static boolean isConnected(Context ctx) {
         // Check if there is an active network connection
         ConnectivityManager cm = (ConnectivityManager)
                 ctx.getSystemService(Context.CONNECTIVITY_SERVICE);

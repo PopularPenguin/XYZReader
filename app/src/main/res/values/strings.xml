@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">XYZ Reader</string>
     <string name="action_share">Share</string>
+    <string name="snackbar">Unable to connect to the network.</string>
 
     <string name="cd_main_image">X Y Z Reader</string>
     <string name="cd_detail_image">Title</string>
