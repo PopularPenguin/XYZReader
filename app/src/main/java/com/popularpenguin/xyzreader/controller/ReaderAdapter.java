@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.data.Article;
-import com.squareup.picasso.Picasso;
+import com.popularpenguin.xyzreader.ui.DynamicHeightNetworkImageView;
+import com.popularpenguin.xyzreader.ui.ImageLoaderHelper;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     /** The view holder to hold the article */
     class ReaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.iv_image_item) ImageView imageView;
+        @BindView(R.id.iv_image_item) DynamicHeightNetworkImageView imageView;
         @BindView(R.id.tv_title_item) TextView titleView;
         @BindView(R.id.tv_date_item) TextView dateView;
         @BindView(R.id.tv_author_item) TextView authorView;
@@ -103,10 +103,9 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         }
 
         void bind(@NonNull Article article) {
-            Picasso.with(ctx)
-                    .load(article.getThumbUrl())
-                    .error(R.drawable.error)
-                    .into(imageView);
+            imageView.setImageUrl(article.getThumbUrl(),
+                    ImageLoaderHelper.getInstance(ctx).getImageLoader());
+            imageView.setAspectRatio(article.getAspectRatio());
 
             titleView.setText(article.getTitle());
             dateView.setText(article.getDate());

@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment implements ReaderPagerAdapter.FragmentLifecycle {
 
-    @BindView(R.id.iv_detail) ImageView mPhotoView;
+    @BindView(R.id.iv_detail) DynamicHeightNetworkImageView mPhotoView;
     @BindView(R.id.rv_content_detail) RecyclerView mRecyclerView;
     @BindView(R.id.toolbar_detail) Toolbar mToolbar;
     @BindView(R.id.collapsing_toolbar_detail) CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -71,6 +71,9 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
         mArticle = DbFetcher.getList().get((position));
 
+        mPhotoView.setImageUrl(mArticle.getThumbUrl(),
+                ImageLoaderHelper.getInstance(getContext()).getImageLoader());
+        mPhotoView.setAspectRatio(mArticle.getAspectRatio());
         Picasso.with(getContext())
                 .load(mArticle.getPhotoUrl())
                 .placeholder(R.drawable.error)

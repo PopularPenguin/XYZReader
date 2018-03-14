@@ -92,6 +92,8 @@ public class NetworkUtils {
         for (int i = 0; i < results.length(); i++) {
             JSONObject o = results.getJSONObject(i);
 
+            float aspectRatio = Float.parseFloat(o.getString("aspect_ratio"));
+
             Article article = new Article.Builder()
                     .id(o.getLong("id"))
                     .title(o.getString("title"))
@@ -99,7 +101,7 @@ public class NetworkUtils {
                     .body(o.getString("body"))
                     .thumbUrl(o.getString("thumb"))
                     .photoUrl(o.getString("photo"))
-                    .aspectRatio(o.getDouble("aspect_ratio"))
+                    .aspectRatio(aspectRatio)
                     .date(o.getString("published_date"))
                     .build();
 

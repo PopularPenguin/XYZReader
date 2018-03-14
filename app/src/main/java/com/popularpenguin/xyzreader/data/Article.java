@@ -21,7 +21,7 @@ public class Article {
     private String body;
     private String thumbUrl;
     private String photoUrl;
-    private double aspectRatio;
+    private float aspectRatio;
     private String date;
 
     Article(Builder b) {
@@ -36,7 +36,7 @@ public class Article {
     }
 
     public Article(long id, String title, String author, String body, String thumbUrl,
-                   String photoUrl, double aspectRatio, String date) {
+                   String photoUrl, float aspectRatio, String date) {
 
         this.id = id;
         this.title = title;
@@ -119,10 +119,10 @@ public class Article {
         this.photoUrl = photoUrl;
     }
 
-    public double getAspectRatio() {
+    public float getAspectRatio() {
         return aspectRatio;
     }
-    public void setAspectRatio(double aspectRatio) {
+    public void setAspectRatio(float aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
 
@@ -141,7 +141,7 @@ public class Article {
         private String body;
         private String thumbUrl;
         private String photoUrl;
-        private double aspectRatio;
+        private float aspectRatio;
         private String date;
 
         public Builder id(long id) {
@@ -180,7 +180,7 @@ public class Article {
             return this;
         }
 
-        public Builder aspectRatio(double ratio) {
+        public Builder aspectRatio(float ratio) {
             aspectRatio = ratio;
 
             return this;
