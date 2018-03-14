@@ -3,6 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:background="@drawable/recycler_selector"
              android:gravity="center">
 
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
-        android:elevation="@dimen/card_elevation"
+        app:cardElevation="@dimen/card_elevation"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="@dimen/card_corner_radius">
 
