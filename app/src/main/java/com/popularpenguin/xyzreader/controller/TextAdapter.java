@@ -3,6 +3,8 @@ package com.popularpenguin.xyzreader.controller;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +69,8 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextHolder> {
             // replace carriage returns with a space
             String text = mPattern.matcher(paragraph).replaceAll(" ");
 
-            paragraphView.setText(text);
+            paragraphView.setText(Html.fromHtml(text));
+            paragraphView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 }
