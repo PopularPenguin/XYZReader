@@ -22,6 +22,8 @@ import okhttp3.Response;
 public class NetworkUtils {
 
     private static final String JSON_URL = "https://go.udacity.com/xyz-reader-json";
+    private static final String TEST_URL =
+            "https://raw.githubusercontent.com/TNTest/xyzreader/master/data.json";
 
     /**
      * Check for a network connection

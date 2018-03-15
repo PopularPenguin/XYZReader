@@ -14,14 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.popularpenguin.xyzreader.R;
 import com.popularpenguin.xyzreader.controller.DbFetcher;
 import com.popularpenguin.xyzreader.controller.ReaderPagerAdapter;
 import com.popularpenguin.xyzreader.controller.TextAdapter;
 import com.popularpenguin.xyzreader.data.Article;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -74,11 +72,6 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
         mPhotoView.setImageUrl(mArticle.getThumbUrl(),
                 ImageLoaderHelper.getInstance(getContext()).getImageLoader());
         mPhotoView.setAspectRatio(mArticle.getAspectRatio());
-        Picasso.with(getContext())
-                .load(mArticle.getPhotoUrl())
-                .placeholder(R.drawable.error)
-                .error(R.drawable.error)
-                .into(mPhotoView);
 
         mCollapsingToolbarLayout.setTitle(mArticle.getTitle());
 

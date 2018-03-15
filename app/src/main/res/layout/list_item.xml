@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:background="@drawable/recycler_selector"
              android:gravity="center">
 
@@ -24,9 +24,9 @@
             <com.popularpenguin.xyzreader.ui.DynamicHeightNetworkImageView
                 android:id="@+id/iv_image_item"
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/cd_list_image"/>
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cd_list_image"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/tv_title_item"
@@ -35,8 +35,8 @@
                 android:layout_margin="@dimen/text_margin"
                 android:minLines="2"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_list_title"/>
+                android:textSize="@dimen/text_list_title"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_author_item"
@@ -51,8 +51,8 @@
                 android:id="@+id/tv_date_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/text_margin"
                 android:layout_marginBottom="@dimen/text_margin"
+                android:layout_marginStart="@dimen/text_margin"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_list_subtitle"/>
 

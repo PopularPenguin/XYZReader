@@ -9,9 +9,8 @@ import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Surface;
 
@@ -108,10 +107,8 @@ public class ListActivity extends ReaderActivity implements
             spanCount = 3; // in landscape orientation RecyclerView has 3 columns
         }
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,
-                spanCount,
-                LinearLayoutManager.VERTICAL,
-                false);
+        RecyclerView.LayoutManager layoutManager =
+                new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
