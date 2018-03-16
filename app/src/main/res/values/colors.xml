@@ -5,9 +5,9 @@
     <color name="colorPrimaryDark">@color/dark_blue</color>
     <color name="colorAccent">@color/orange</color>
 
-    <color name="blue">#3399FF</color>
-    <color name="dark_blue">#0000FF</color>
-    <color name="orange">#F69D3A</color>
+    <color name="blue">#03A9F4</color>
+    <color name="dark_blue">#0D47A1</color>
+    <color name="orange">#F69800</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
