@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="colorPrimary">@color/black</color>
-    <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">@color/magenta</color>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorPrimaryDark">@color/dark_blue</color>
+    <color name="colorAccent">@color/orange</color>
 
-    <color name="light_black">#0F0F1F</color>
+    <color name="blue">#3399FF</color>
+    <color name="dark_blue">#0000FF</color>
+    <color name="orange">#F69D3A</color>
     <color name="black">#000000</color>
-    <color name="gray">#A9A9A9</color>
-    <color name="magenta">#FF4081</color>
     <color name="white">#FFFFFF</color>
 
 </resources>
