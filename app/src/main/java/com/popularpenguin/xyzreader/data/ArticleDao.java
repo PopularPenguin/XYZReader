@@ -1,5 +1,6 @@
 package com.popularpenguin.xyzreader.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -12,7 +13,6 @@ import java.util.List;
 /** Room's DAO for articles */
 @Dao
 public interface ArticleDao {
-    // TODO: Wrap in LiveData
     @Query("SELECT * FROM articles")
     List<Article> getAll();
 

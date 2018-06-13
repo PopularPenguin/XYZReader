@@ -1,5 +1,6 @@
 package com.popularpenguin.xyzreader.controller;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -89,8 +90,6 @@ public class NetworkUtils {
 
         queue.add(request);
     }
-
-    // TODO: Use Gson
 
     /**
      * @param jsonString The String returned from getJson(String url)

@@ -24,7 +24,6 @@ android {
 
 ext {
     roomVersion = '1.1.0'
-    lifecycleVersion = '1.1.1'
     supportLibVersion = '27.1.1'
 }
 
@@ -39,8 +38,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
 
     // Room dependencies
-    implementation "android.arch.lifecycle:runtime:$lifecycleVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycleVersion"
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
 

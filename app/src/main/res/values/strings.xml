@@ -3,6 +3,12 @@
     <string name="action_share">Share</string>
     <string name="snackbar">Unable to connect to the network.</string>
 
+    <string name="menu_about">About</string>
+
+    <string name="dialog_ok">Ok</string>
+    <string name="dialog_about_title">XYZ Reader Demo App</string>
+    <string name="dialog_about_body">A UI demo app for Udacity\'s Android Developer Nanodegree program.</string>
+
     <string name="cd_main_image">X Y Z Reader</string>
     <string name="cd_detail_image">Title</string>
     <string name="cd_list_image">Article</string>

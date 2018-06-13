@@ -9,6 +9,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
 
 import com.popularpenguin.xyzreader.R;
@@ -132,5 +134,21 @@ public class ListActivity extends ReaderActivity implements
         intent.putExtra(INTENT_EXTRA_ARTICLE, position);
 
         startActivity(intent, animation);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_about) {
+            AboutDialog.show(this);
+        }
+
+        return true;
     }
 }
