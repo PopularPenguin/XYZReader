@@ -33,22 +33,20 @@ public class RoomDbTest {
     }
 
     @After
-    public void closeDb() throws IOException {
+    public void closeDb() {
         mDb.close();
     }
 
     @Test
-    public void addArticleAndRead() throws Exception {
-        Article article = new Article.Builder()
-                .id(0)
-                .title("Lord of the Rings")
-                .author("J.R.R. Tolkien")
-                .body("Insert long body of text here...")
-                .thumbUrl("...")
-                .photoUrl("...")
-                .aspectRatio(1.0)
-                .date("July 29, 1954")
-                .build();
+    public void addArticleAndRead() {
+        Article article = new Article(0,
+                "Lord of the Rings",
+                "J.R.R. Tolkien",
+                "Insert long body of text here",
+                "...",
+                "...",
+                1.0f,
+                "July 29, 1954");
 
         mArticleDao.insert(article);
         Article byId = mArticleDao.loadById(0);

@@ -3,6 +3,8 @@ package com.popularpenguin.xyzreader.data;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -19,21 +21,14 @@ public class Article {
     private String title;
     private String author;
     private String body;
-    private String thumbUrl;
-    private String photoUrl;
+    private String thumb;
+    private String photo;
+    @SerializedName("aspect_ratio")
     private float aspectRatio;
+    @SerializedName("published_date")
     private String date;
 
-    Article(Builder b) {
-        this.id = b.id;
-        this.title = b.title;
-        this.author = b.author;
-        this.body = b.body;
-        this.thumbUrl = b.thumbUrl;
-        this.photoUrl = b.photoUrl;
-        this.aspectRatio = b.aspectRatio;
-        this.date = b.date;
-    }
+    public Article() { }
 
     public Article(long id, String title, String author, String body, String thumbUrl,
                    String photoUrl, float aspectRatio, String date) {
@@ -42,8 +37,8 @@ public class Article {
         this.title = title;
         this.author = author;
         this.body = body;
-        this.thumbUrl = thumbUrl;
-        this.photoUrl = photoUrl;
+        this.thumb = thumbUrl;
+        this.photo = photoUrl;
         this.aspectRatio = aspectRatio;
         this.date = parseDate(date);
     }
@@ -105,18 +100,18 @@ public class Article {
         this.body = body;
     }
 
-    public String getThumbUrl() {
-        return thumbUrl;
+    public String getThumb() {
+        return thumb;
     }
-    public void setThumbUrl(String thumbUrl) {
-        this.thumbUrl = thumbUrl;
+    public void setThumb(String thumbUrl) {
+        this.thumb = thumbUrl;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getPhoto() {
+        return photo;
     }
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhoto(String photoUrl) {
+        this.photo = photoUrl;
     }
 
     public float getAspectRatio() {
@@ -127,73 +122,16 @@ public class Article {
     }
 
     public String getDate() {
-        return date;
+        return parseDate(date);
     }
     public void setDate(String date) {
-        this.date = parseDate(date);
+        this.date = date;
     }
 
-    /** Article builder inner class */
-    public static class Builder {
-        private long id;
-        private String title;
-        private String author;
-        private String body;
-        private String thumbUrl;
-        private String photoUrl;
-        private float aspectRatio;
-        private String date;
-
-        public Builder id(long id) {
-            this.id = id;
-
-            return this;
-        }
-
-        public Builder title(String title) {
-            this.title = title;
-
-            return this;
-        }
-
-        public Builder author(String author) {
-            this.author = author;
-
-            return this;
-        }
-
-        public Builder body(String body) {
-            this.body = body;
-
-            return this;
-        }
-
-        public Builder thumbUrl(String url) {
-            thumbUrl = url;
-
-            return this;
-        }
-
-        public Builder photoUrl(String url) {
-            photoUrl = url;
-
-            return this;
-        }
-
-        public Builder aspectRatio(float ratio) {
-            aspectRatio = ratio;
-
-            return this;
-        }
-
-        public Builder date(String date) {
-            this.date = parseDate(date);
-
-            return this;
-        }
-
-        public Article build() {
-            return new Article(this);
-        }
+    @Override
+    public String toString() {
+        return String.format(Locale.US, "%d, %s, %s, %s, %s, %s, %f, %s",
+                id, title, author, body.substring(0, 9) + "...",
+                thumb, photo, aspectRatio, date);
     }
 }

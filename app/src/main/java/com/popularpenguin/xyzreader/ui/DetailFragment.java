@@ -69,7 +69,7 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
         mArticle = AppDatabase.getList().get((position));
 
-        mPhotoView.setImageUrl(mArticle.getThumbUrl(),
+        mPhotoView.setImageUrl(mArticle.getThumb(),
                 ImageLoaderHelper.getInstance(getContext()).getImageLoader());
         mPhotoView.setAspectRatio(mArticle.getAspectRatio());
 

@@ -3,6 +3,7 @@ package com.popularpenguin.xyzreader.controller;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,9 +109,9 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         }
 
         void bind(@NonNull Article article) {
-            imageView.setImageUrl(article.getThumbUrl(),
+            imageView.setImageUrl(article.getThumb(),
                     ImageLoaderHelper.getInstance(ctx).getImageLoader());
-            imageView.setAspectRatio(article.getAspectRatio());
+            //imageView.setAspectRatio(article.getAspectRatio());
 
             titleView.setText(article.getTitle());
             dateView.setText(article.getDate());

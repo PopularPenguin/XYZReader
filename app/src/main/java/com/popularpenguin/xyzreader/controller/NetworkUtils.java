@@ -3,6 +3,7 @@ package com.popularpenguin.xyzreader.controller;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,14 +11,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.popularpenguin.xyzreader.data.AppDatabase;
 import com.popularpenguin.xyzreader.data.Article;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -65,21 +69,16 @@ public class NetworkUtils {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            List<Article> articles = parseJSON(response);
-                            adapter.setArticles(articles);
-                            adapter.notifyDataSetChanged();
-                            AppDatabase.setList(articles);
+                        List<Article> articles = parseJSON(response);
+                        adapter.setArticles(articles);
+                        adapter.notifyDataSetChanged();
+                        AppDatabase.setList(articles);
 
-                            AppExecutors.get()
-                                    .diskIO()
-                                    .execute(() -> AppDatabase.get(ctx)
-                                            .dao()
-                                            .insertArticlesReplace(articles));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        AppExecutors.get()
+                                .diskIO()
+                                .execute(() -> AppDatabase.get(ctx)
+                                        .dao()
+                                        .insertArticlesReplace(articles));
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -92,12 +91,20 @@ public class NetworkUtils {
     }
 
     // TODO: Use Gson
+
     /**
      * @param jsonString The String returned from getJson(String url)
      * @return A list of Article objects parsed from the JSON
-     * @throws JSONException
      */
-    private static List<Article> parseJSON(String jsonString) throws JSONException {
+    private static List<Article> parseJSON(String jsonString) {
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<Collection<Article>>(){}.getType();
+        Collection<Article> articles = gson.fromJson(jsonString, collectionType);
+        List<Article> list = new ArrayList<>(articles);
+        Log.e(TAG, list.get(0).toString());
+        return new ArrayList<>(articles);
+
+        /*
         JSONArray results = new JSONArray(jsonString);
 
         List<Article> articleList = new ArrayList<>();
@@ -122,5 +129,6 @@ public class NetworkUtils {
         }
 
         return articleList;
+        */
     }
 }
