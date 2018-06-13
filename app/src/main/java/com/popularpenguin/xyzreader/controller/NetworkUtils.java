@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.popularpenguin.xyzreader.data.AppDatabase;
 import com.popularpenguin.xyzreader.data.Article;
 
 import org.json.JSONArray;
@@ -49,9 +50,10 @@ public class NetworkUtils {
     public static void fetchArticles(Context ctx, ReaderAdapter adapter) {
         if (!isConnected(ctx)) {
             AppExecutors.get().diskIO().execute(() -> {
-                List<Article> articles = DbFetcher.get(ctx).getArticleDao().getAll();
-                DbFetcher.setList(articles);
+                List<Article> articles = AppDatabase.get(ctx).dao().getAll();
+                AppDatabase.setList(articles);
                 adapter.setArticles(articles);
+                adapter.notifyDataSetChanged();
             });
 
             return;
@@ -66,12 +68,13 @@ public class NetworkUtils {
                         try {
                             List<Article> articles = parseJSON(response);
                             adapter.setArticles(articles);
-                            DbFetcher.setList(articles);
+                            adapter.notifyDataSetChanged();
+                            AppDatabase.setList(articles);
 
                             AppExecutors.get()
                                     .diskIO()
-                                    .execute(() -> DbFetcher.get(ctx)
-                                            .getArticleDao()
+                                    .execute(() -> AppDatabase.get(ctx)
+                                            .dao()
                                             .insertArticlesReplace(articles));
 
                         } catch (JSONException e) {
@@ -88,6 +91,7 @@ public class NetworkUtils {
         queue.add(request);
     }
 
+    // TODO: Use Gson
     /**
      * @param jsonString The String returned from getJson(String url)
      * @return A list of Article objects parsed from the JSON

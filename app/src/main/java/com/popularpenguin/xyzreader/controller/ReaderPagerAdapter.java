@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.popularpenguin.xyzreader.data.AppDatabase;
 import com.popularpenguin.xyzreader.ui.DetailFragment;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
         mListener = new OnPageChangeListener();
 
-        int size = DbFetcher.getList().size();
+        int size = AppDatabase.getList().size();
         for (int i = 0; i < size; i++) {
             mFragmentList.add(DetailFragment.newInstance(i));
         }
@@ -34,7 +35,7 @@ public class ReaderPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return DbFetcher.getList().size();
+        return AppDatabase.getList().size();
     }
 
     public OnPageChangeListener getPageChangeListener() {

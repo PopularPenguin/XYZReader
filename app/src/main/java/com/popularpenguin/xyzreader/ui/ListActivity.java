@@ -1,12 +1,9 @@
 package com.popularpenguin.xyzreader.ui;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
 import android.content.Intent;
-import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -25,16 +22,22 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Activity that displays the article list */
+/**
+ * Activity that displays the article list
+ */
 public class ListActivity extends ReaderActivity implements
         ReaderAdapter.ReaderAdapterOnClickHandler {
 
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
-    @BindView(R.id.swipe_list) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.toolbar_list) Toolbar mToolbar;
-    @BindView(R.id.app_bar_list) AppBarLayout mAppBar;
-    @BindView(R.id.collapsing_toolbar_list) CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.swipe_list)
+    SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.toolbar_list)
+    Toolbar mToolbar;
+    @BindView(R.id.app_bar_list)
+    AppBarLayout mAppBar;
+    @BindView(R.id.collapsing_toolbar_list)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private RecyclerView mRecyclerView; // Bind later in setupRecyclerView()
     private ReaderAdapter mAdapter;
@@ -56,9 +59,14 @@ public class ListActivity extends ReaderActivity implements
         setRecyclerView();
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            if (mRecyclerView != null) {
+            if (mAdapter != null && NetworkUtils.isConnected(this)) {
                 NetworkUtils.fetchArticles(this, mAdapter);
+            } else {
+                Snackbar.make(mRefreshLayout, R.string.snackbar, Snackbar.LENGTH_LONG)
+                        .show();
             }
+
+            mRefreshLayout.setRefreshing(false);
         });
 
         // Display text on app bar when it is totally collapsed
@@ -76,8 +84,7 @@ public class ListActivity extends ReaderActivity implements
                     String appName = getResources().getString(R.string.app_name);
                     mCollapsingToolbarLayout.setTitle(appName);
                     isShowing = true;
-                }
-                else if (isShowing) {
+                } else if (isShowing) {
                     mCollapsingToolbarLayout.setTitle(" ");
                     isShowing = false;
                 }
@@ -96,14 +103,17 @@ public class ListActivity extends ReaderActivity implements
 
         // populate the adapter with articles fetched from the network
         NetworkUtils.fetchArticles(this, mAdapter);
+        if (!NetworkUtils.isConnected(this)) {
+            Snackbar.make(mRecyclerView, R.string.snackbar, Snackbar.LENGTH_LONG)
+                    .show();
+        }
 
         int orientation = getWindowManager().getDefaultDisplay().getRotation();
         int spanCount;
 
         if (orientation == Surface.ROTATION_0 || orientation == Surface.ROTATION_180) {
             spanCount = 2; // in portrait orientation RecyclerView has 2 columns
-        }
-        else {
+        } else {
             spanCount = 3; // in landscape orientation RecyclerView has 3 columns
         }
 

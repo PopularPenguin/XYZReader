@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.popularpenguin.xyzreader.R;
-import com.popularpenguin.xyzreader.controller.DbFetcher;
 import com.popularpenguin.xyzreader.controller.ReaderPagerAdapter;
 import com.popularpenguin.xyzreader.controller.TextAdapter;
+import com.popularpenguin.xyzreader.data.AppDatabase;
 import com.popularpenguin.xyzreader.data.Article;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class DetailFragment extends Fragment implements ReaderPagerAdapter.Fragm
 
         // The article's position in the list
         int position = getArguments().getInt(ListActivity.INTENT_EXTRA_ARTICLE);
-        mArticle = DbFetcher.getList().get((position));
+        mArticle = AppDatabase.getList().get((position));
 
         mPhotoView.setImageUrl(mArticle.getThumbUrl(),
                 ImageLoaderHelper.getInstance(getContext()).getImageLoader());

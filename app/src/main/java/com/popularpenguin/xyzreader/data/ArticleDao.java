@@ -12,6 +12,7 @@ import java.util.List;
 /** Room's DAO for articles */
 @Dao
 public interface ArticleDao {
+    // TODO: Wrap in LiveData
     @Query("SELECT * FROM articles")
     List<Article> getAll();
 
