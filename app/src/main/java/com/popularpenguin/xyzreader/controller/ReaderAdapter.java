@@ -28,7 +28,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     }
 
     private final Context ctx;
-    private final List<Article> mArticleList;
+    private List<Article> mArticleList;
     private final ReaderAdapterOnClickHandler mClickHandler;
 
     private int lastPosition = -1; // save the last view position for animations
@@ -68,6 +68,11 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
     @Override
     public void onViewDetachedFromWindow(@NonNull ReaderViewHolder holder) {
         holder.clearAnimation();
+    }
+
+    public void setArticles(List<Article> articles) {
+        mArticleList = articles;
+        notifyDataSetChanged();
     }
 
     /**

@@ -4,22 +4,27 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.popularpenguin.xyzreader.data.Article;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-/** Network utility class to check for Internet connectivity and parsing JSON from the server */
+/**
+ * Network utility class to check for Internet connectivity and parsing JSON from the server
+ */
 public class NetworkUtils {
+
+    private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String JSON_URL = "https://go.udacity.com/xyz-reader-json";
     private static final String TEST_URL =
@@ -27,6 +32,7 @@ public class NetworkUtils {
 
     /**
      * Check for a network connection
+     *
      * @param ctx The context
      * @return is there network connectivity?
      */
@@ -40,45 +46,46 @@ public class NetworkUtils {
         return info != null && info.isConnectedOrConnecting();
     }
 
-    /**
-     * Fetch the articles from the network
-     * @param ctx The context
-     * @return The list of articles to display
-     */
-    static List<Article> getArticles(Context ctx) {
-        // Check for a network connection, if there is none, return an empty list
+    public static void fetchArticles(Context ctx, ReaderAdapter adapter) {
         if (!isConnected(ctx)) {
-            return new ArrayList<>();
+            AppExecutors.get().diskIO().execute(() -> {
+                List<Article> articles = DbFetcher.get(ctx).getArticleDao().getAll();
+                DbFetcher.setList(articles);
+                adapter.setArticles(articles);
+            });
+
+            return;
         }
 
-        List<Article> articles = null;
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        StringRequest request = new StringRequest(Request.Method.GET,
+                JSON_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            List<Article> articles = parseJSON(response);
+                            adapter.setArticles(articles);
+                            DbFetcher.setList(articles);
 
-        try {
-            articles = parseJSON(getJson(JSON_URL));
-        }
-        catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+                            AppExecutors.get()
+                                    .diskIO()
+                                    .execute(() -> DbFetcher.get(ctx)
+                                            .getArticleDao()
+                                            .insertArticlesReplace(articles));
 
-        return articles;
-    }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // ...
+            }
+        });
 
-    /**
-     * Request JSON from server and return them as a String
-     * @param url The HTTP URL
-     * @return JSON String from the URL
-     * @throws IOException
-     */
-    private static String getJson(String url) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        Response response = client.newCall(request).execute();
-
-        return response.body().string();
+        queue.add(request);
     }
 
     /**

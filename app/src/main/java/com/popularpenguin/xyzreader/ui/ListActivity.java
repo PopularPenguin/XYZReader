@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Surface;
 
 import com.popularpenguin.xyzreader.R;
-import com.popularpenguin.xyzreader.controller.ArticleLoader;
 import com.popularpenguin.xyzreader.controller.NetworkUtils;
 import com.popularpenguin.xyzreader.controller.ReaderAdapter;
 import com.popularpenguin.xyzreader.data.Article;
@@ -28,8 +27,7 @@ import butterknife.ButterKnife;
 
 /** Activity that displays the article list */
 public class ListActivity extends ReaderActivity implements
-        ReaderAdapter.ReaderAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<List<Article>> {
+        ReaderAdapter.ReaderAdapterOnClickHandler {
 
     public static final String INTENT_EXTRA_ARTICLE = "article_id";
 
@@ -39,6 +37,7 @@ public class ListActivity extends ReaderActivity implements
     @BindView(R.id.collapsing_toolbar_list) CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private RecyclerView mRecyclerView; // Bind later in setupRecyclerView()
+    private ReaderAdapter mAdapter;
     private List<Article> mArticles = new ArrayList<>();
 
     @Override
@@ -54,13 +53,11 @@ public class ListActivity extends ReaderActivity implements
 
         setTransition();
 
-        getSupportLoaderManager().initLoader(0, null, this);
+        setRecyclerView();
 
         mRefreshLayout.setOnRefreshListener(() -> {
-            getSupportLoaderManager().restartLoader(0, null, this);
-
             if (mRecyclerView != null) {
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                NetworkUtils.fetchArticles(this, mAdapter);
             }
         });
 
@@ -88,14 +85,17 @@ public class ListActivity extends ReaderActivity implements
         });
     }
 
-    private void setupRecyclerView() {
+    private void setRecyclerView() {
         if (mRecyclerView != null) {
             return;
         }
 
         mRecyclerView = findViewById(R.id.rv_list);
-        ReaderAdapter adapter = new ReaderAdapter(this, mArticles, this);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new ReaderAdapter(this, mArticles, this);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // populate the adapter with articles fetched from the network
+        NetworkUtils.fetchArticles(this, mAdapter);
 
         int orientation = getWindowManager().getDefaultDisplay().getRotation();
         int spanCount;
@@ -122,32 +122,5 @@ public class ListActivity extends ReaderActivity implements
         intent.putExtra(INTENT_EXTRA_ARTICLE, position);
 
         startActivity(intent, animation);
-    }
-
-    /** Loader callbacks */
-    @NonNull
-    @Override
-    public Loader<List<Article>> onCreateLoader(int id, Bundle bundle) {
-        return new ArticleLoader(this);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Article>> loader, List<Article> data) {
-        if (data != null && !data.isEmpty()) {
-            mArticles = data;
-
-            setupRecyclerView();
-
-            mRefreshLayout.setRefreshing(false);
-        }
-
-        if (!NetworkUtils.isConnected(this)) {
-            Snackbar.make(mRecyclerView, R.string.snackbar, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Article>> loader) {
-        // Not implemented
     }
 }
