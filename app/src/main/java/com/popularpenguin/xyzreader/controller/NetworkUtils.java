@@ -100,35 +100,7 @@ public class NetworkUtils {
         Gson gson = new Gson();
         Type collectionType = new TypeToken<Collection<Article>>(){}.getType();
         Collection<Article> articles = gson.fromJson(jsonString, collectionType);
-        List<Article> list = new ArrayList<>(articles);
-        Log.e(TAG, list.get(0).toString());
+
         return new ArrayList<>(articles);
-
-        /*
-        JSONArray results = new JSONArray(jsonString);
-
-        List<Article> articleList = new ArrayList<>();
-
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject o = results.getJSONObject(i);
-
-            float aspectRatio = Float.parseFloat(o.getString("aspect_ratio"));
-
-            Article article = new Article.Builder()
-                    .id(o.getLong("id"))
-                    .title(o.getString("title"))
-                    .author(o.getString("author"))
-                    .body(o.getString("body"))
-                    .thumbUrl(o.getString("thumb"))
-                    .photoUrl(o.getString("photo"))
-                    .aspectRatio(aspectRatio)
-                    .date(o.getString("published_date"))
-                    .build();
-
-            articleList.add(article);
-        }
-
-        return articleList;
-        */
     }
 }
